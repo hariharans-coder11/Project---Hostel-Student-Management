@@ -19,17 +19,17 @@ public class DataSeeder implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        String email = "richard@hostel.com";
+        String email = "hariharan@hostel.com";
         if (!userRepository.existsByEmail(email)) {
             User user = new User(
-                    "Richard",
+                    "Hariharan",
                     email,
                     passwordEncoder.encode("password123"),
                     Role.STUDENT,
-                    "B-402"
+                    "A-204"
             );
             userRepository.save(user);
-            System.out.println("Created seeder user: richard@hostel.com");
+            System.out.println("Created seeder user: hariharan@hostel.com");
         }
     }
 }

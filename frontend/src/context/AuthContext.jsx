@@ -11,9 +11,33 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     const storedUser = localStorage.getItem('user');
     const storedToken = localStorage.getItem('token');
+    const defaultHariharan = {
+      id: '1',
+      name: 'Hariharan',
+      email: 'hariharan@student.edu',
+      room: 'A-204',
+      role: 'STUDENT',
+    };
+
     if (storedUser && storedToken) {
-      setUser(JSON.parse(storedUser));
-      setToken(storedToken);
+      try {
+        const parsed = JSON.parse(storedUser);
+        if (parsed.name === 'Richard' || !parsed.name) {
+          parsed.name = 'Hariharan';
+          parsed.email = 'hariharan@student.edu';
+          localStorage.setItem('user', JSON.stringify(parsed));
+        }
+        setUser(parsed);
+        setToken(storedToken);
+      } catch (e) {
+        setUser(defaultHariharan);
+        setToken('mock-jwt-token');
+      }
+    } else {
+      setUser(defaultHariharan);
+      setToken('mock-jwt-token');
+      localStorage.setItem('user', JSON.stringify(defaultHariharan));
+      localStorage.setItem('token', 'mock-jwt-token');
     }
     setLoading(false);
   }, []);
@@ -35,9 +59,9 @@ export const AuthProvider = ({ children }) => {
   const demoLogin = () => {
     const mockUser = {
       id: '1',
-      name: 'Richard',
-      email: 'richard@student.edu',
-      room: 'B-402',
+      name: 'Hariharan',
+      email: 'hariharan@student.edu',
+      room: 'A-204',
       role: 'STUDENT',
     };
     const mockToken = 'mock-jwt-token';
